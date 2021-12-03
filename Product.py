@@ -1,6 +1,7 @@
+import csv
 def output():
     import pandas as pd
-    df = pd.read_csv("ProductDetailsedit.csv")
+    df = pd.read_csv("Product1.csv")
     number = 0.20
     percentage = "{:.0%}".format(number)
     df["ProductSalesTax"] = percentage
@@ -9,32 +10,28 @@ def output():
     
     
 
-    df.to_csv("ProductDetailsedit.csv", index=False)
+    df.to_csv("Product1.csv", index=False)
 
+
+
+
+def read():
+    with open('Product1.csv','r') as csvinput: 
+        reader = csv.reader(csvinput)
+        for i in reader:
+            print(i)
+
+
+read()
 output()
 
-Next Method
-# import csv
-
-# with open('ProductDetailedits.csv','r') as csvinput:
-#     with open('newOutput.csv', 'w') as csvoutput:
-#         writer = csv.writer(csvoutput, lineterminator='\n')
-#         reader = csv.reader(csvinput)
-
-#         all = []
-#         row = next(reader)
-#         print(row)
-#         # print(row.append("new"))
-#         row.append('ProductFinalPrice')
-#         row.append('ProductFinalPrice')
-#         # print(row)
-#         all.append(row)
-#         # print(all)
-
-#         for row in reader:
-#             row.append(row[0])
-#             # print(row[0])
-#             all.append(row)
-
-#         writer.writerows(all)
-#         print(all)
+# Output:-
+# PS C:\Users\rahul\OneDrive\Desktop\New folder (17)> python -u "c:\Users\rahul\OneDrive\Desktop\New folder (17)\Product.py"
+# ['ProductName', 'ProductCostPrice', 'Country']
+# ['Mobile', '30000', 'India']      
+# ['Laptop', '40000', 'India']      
+# ['Gold', '80000', 'Dubai']        
+# ['Steel', '15000', 'England']     
+# ['SportsBike', '200000', 'Europe']
+# ['Watch', '5000', 'Japan']
+# PS C:\Users\rahul\OneDrive\Desktop\New folder (17)> 
