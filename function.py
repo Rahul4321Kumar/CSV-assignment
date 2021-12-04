@@ -37,5 +37,5 @@ def csv_output( filename,filename1):
     write_csv(filename, filename1)
 
 if __name__ == "__main__":
-    csv_output("Product1.csv","Output.csv")
+    csv_output("Input.csv","Output.csv")
         

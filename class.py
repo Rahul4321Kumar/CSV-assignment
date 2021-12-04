@@ -10,7 +10,7 @@ class CsvOperation:
          function.write_csv(self.filename, filename1)
 
 if __name__ == '__main__':
-     result = CsvOperation("Product1.csv")
+     result = CsvOperation("Input.csv")
      result.csv_output("Output.csv")
 
 
