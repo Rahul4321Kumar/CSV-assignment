@@ -1,78 +1,93 @@
+"""This module contains all csv inbuilt function to read anf write csv file"""
 import csv
 
 
-def file_validation(filename2):
-    if not filename2.endswith(".csv"):
-        raise FileNotFoundError("filename2 is not a valid csv file")
+def file_validation(input_file):
+    """This function is use to check file is valid or not"""
+    try:
+        if not input_file.endswith(".csv"):
+            raise FileNotFoundError
+    except FileNotFoundError:
+        print("input_file is not a valid csv file")
     else:
         print("Its a valid csv file")
 
-def csv_datatype_validate(val):
-    for i in val[1:]:
-        if isinstance(i[0],str):
-            print("all data are in correct format")
-        else:
-            print("data in productname are not in correct format")
+def csv_datatype_validate(csv_data):
+    """This function is use to check datatype of csv_file_content"""
 
-        if isinstance(i[1],int):
-            print("all data are in correct format")
-        else:
-            print("data in costprice are not in correct format")
-            isinstance(int(i[1]),int)
+    for data in csv_data[1:]:
+        try:
+            if isinstance(data[0], str) and isinstance(data[2], str):
+                print("Data are in correct format")
+                if isinstance(data[1], int):
+                    print("Data are in correct format")
+                else:
+                    raise ValueError
+            else:
+                raise ValueError
+        except ValueError:
+            print("Data are not in correct format typecast the data in appropriate datatype")
 
-        if isinstance(i[2],str):
-            print("all data are in correct format")
         else:
-            print("data in country are not in correct format")
+            if isinstance(data[0], str) and isinstance(data[2], str):
+                print("Data are in correct format")
+                if isinstance(int(data[1]), int):
+                    print("Data are in correct format")
+                else:
+                    raise ValueError
+            else:
+                raise ValueError
+    print("All data are in appropriate format")
 
 
-def column_name_validate(val,header):
-        print(val[0])
-        if val[0]==header:
-            print("All header matched")
-        else:
-            print("Issue in header do changes in input of HEADER_VALIDATE")
-        
-    
-        
-def read_csv(filename):
-    with open(filename)as csv_file:
-        reader = csv.reader(csv_file)
-        lst=[]
+def column_name_validate(csv_data,header):
+    """This function is used to check header of csv"""
+
+    if csv_data[0] == header:
+        print("All header matched")
+    else:
+        print("Issue in header do changes in input of HEADER_VALIDATE")
+
+def read_csv(input_file):
+    """This function is used to read csv file content and store in a variable(reading_csv_data)"""
+    with open(input_file) as csv_input:
+        reader = csv.reader(csv_input)
+        reading_csv_data = []
         for read_data in reader:
             test_list = list(filter(None, read_data))
-            lst.append(test_list)
-    return lst
-    
+            reading_csv_data.append(test_list)
+    return reading_csv_data
 
-def write_csv(filename1, val):
-        with open(filename1, 'w') as csvoutput:
-            writer = csv.writer(csvoutput, lineterminator='\n')
-            all = []
-            row = val[0]
-            row.append('ProductSaleaTax')
-            row.append('ProductFinalPrice')
-            all.append(row)
-            logic_to_fill_newcolumn(val,writer,all)
-    
-def logic_to_fill_newcolumn(val,writer,all):
-    for row in val[1:]:
+def write_csv(output_file, csv_data):
+    """This function is used to create new csv file with extra two column"""
+    with open(output_file, 'w') as csv_output:
+        writer = csv.writer(csv_output, lineterminator='\n')
+        all = []
+        row = csv_data[0]
+        row.append('ProductSaleaTax')
+        row.append('ProductFinalPrice')
+        all.append(row)
+        logic_to_fill_newcolumn(csv_data,writer,all)
+
+def logic_to_fill_newcolumn(csv_data,writer,all):
+    """This function is used to fill data in newly created columns"""
+    for row in csv_data[1:]:
         row.append(20)
         res = int(row[1])*0.20
         price = int(row[1])+res
         row.append(price)
         all.append(row)
     writer.writerows(all)
-    
-def csv_output( filename,filename1,filename2):
-    HEADER_VALIDATE=["Product_Name","Product-CostPrice","Country"]
-    val=read_csv(filename)
-    csv_datatype_validate(val)
-    column_name_validate(val,HEADER_VALIDATE)
-    write_csv(filename1, val)
-    file_validation(filename2)
-    
+
+def csv_output(input_file,output_file):
+    """This function is used to handle all csv file_validation and its operation"""
+    header_validate = ["Product_Name","Product-CostPrice","Country"]
+    csv_data = read_csv(input_file)
+    csv_datatype_validate(csv_data)
+    column_name_validate(csv_data,header_validate)
+    write_csv(output_file, csv_data)
+    file_validation(input_file)
 
 if __name__ == "__main__":
-    csv_output("Input.csv","Output.csv","Example.csv")
-        
+    csv_output("Input.csv","Output.csv")
+    
